@@ -36,14 +36,21 @@ Remove Caveman's own OpenCode plugin (`plugins/caveman` in the OpenCode config d
 The statusline scripts are there because `caveman-activate.js` copies them to the config dir when a `statusLine` uses them.
 
 In OpenCode, Caveman's own plugin in `src/plugins/opencode/` does the same job through OpenCode's session hooks: it adds the skill to the system prompt of every model call, main thread and subagents alike, and reads `stop caveman` or `normal mode` from the user's prompts only.
-It keeps its mode in `.caveman-active` in the OpenCode config dir.
+It keeps its mode in `.caveman-active` in the OpenCode config dir, so a switch applies to every OpenCode session on the machine.
+[`opencode/server.mjs`](opencode/server.mjs) loads that plugin and registers its `/caveman` command:
+
+| Command | Effect |
+|---------|--------|
+| `/caveman` | Turns caveman mode on |
+| `/caveman off` | Turns it off |
+| `/caveman status` | Reports the current mode without changing it |
 
 ## What it drops
 
 - Every other skill: `cavecrew`, `ultracave`, `megacave`, `caveman-commit`, `caveman-review`, `caveman-compress`, `caveman-stats`, `caveman-help`, `caveman-explore`, `caveman-init`, the Caveman Cloud skills (`caveman-setup`, `-manage`, `-optimize`, `-discover`, `-evidence-review`, `-learn`) and the workflow skills (`investigate-first`, `lean-build`, `migration`, `safe-refactor`, `surgical-patch`, `verify-and-stop`).
 - The `cavecrew-builder`, `cavecrew-investigator` and `cavecrew-reviewer` agents, and `cavecrew-model-overrides.js`.
 - The `SessionEnd` hook, which only records stats.
-- The OpenCode slash-command files and the `AGENTS.md` block Caveman's installer writes.
+- Every OpenCode command except `/caveman`, and the `AGENTS.md` block Caveman's installer writes.
 
 ## Upstream
 

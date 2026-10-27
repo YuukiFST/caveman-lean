@@ -1,10 +1,10 @@
 {
   "name": "caveman-lean",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Caveman's terse-output mode and nothing else: the three hooks that apply it on their own, plus the skill they read.",
   "license": "Apache-2.0",
   "private": true,
   "exports": {
-    ".": "./src/plugins/opencode/server.js"
+    ".": "./opencode/server.mjs"
   }
 }
