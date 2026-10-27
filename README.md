@@ -37,7 +37,7 @@ The statusline scripts are there because `caveman-activate.js` copies them to th
 
 In OpenCode, Caveman's own plugin in `src/plugins/opencode/` does the same job through OpenCode's session hooks: it adds the skill to the system prompt of every model call, main thread and subagents alike, and reads `stop caveman` or `normal mode` from the user's prompts only.
 It keeps its mode in `.caveman-active` in the OpenCode config dir, so a switch applies to every OpenCode session on the machine.
-[`opencode/server.mjs`](opencode/server.mjs) loads that plugin and registers its `/caveman` command:
+[`opencode/server.mjs`](opencode/server.mjs) loads that plugin, hands its ruleset to compaction summaries as well, and registers its `/caveman` command:
 
 | Command | Effect |
 |---------|--------|

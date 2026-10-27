@@ -45,9 +45,9 @@ async function setupAsOpenCode(sessionEvents) {
   return { hooks, commands, sent, dispose };
 }
 
-async function systemFor(hooks, sessionID, agent) {
+async function systemFor(hooks, sessionID, agent, hookName = 'context') {
   const event = { sessionID, agent, system: [], messages: [], tools: {}, options: {} };
-  await hooks.context(event);
+  await hooks[hookName](event);
   return event.system.map((part) => part.text).join('\n');
 }
 
@@ -77,6 +77,21 @@ test('the main thread and every subagent get the full caveman skill until the us
     await prompt(hooks, 'ses_main', 'stop caveman');
     assert.strictEqual(await systemFor(hooks, 'ses_main', 'build'), '');
     assert.strictEqual(await systemFor(hooks, 'ses_child', 'general'), '');
+  } finally {
+    dispose();
+  }
+});
+
+test('compaction summaries are written in caveman mode while it is on', async () => {
+  const { hooks, commands, dispose } = await setupAsOpenCode([]);
+  try {
+    await runCommand(commands, 'ses_main', '');
+    const system = await systemFor(hooks, 'ses_main', 'build', 'compaction');
+    assert.match(system, /^CAVEMAN MODE ACTIVE \(caveman\)/);
+    assert.ok(system.includes(skillBody));
+
+    await runCommand(commands, 'ses_main', 'off');
+    assert.strictEqual(await systemFor(hooks, 'ses_main', 'build', 'compaction'), '');
   } finally {
     dispose();
   }

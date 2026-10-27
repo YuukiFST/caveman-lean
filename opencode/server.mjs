@@ -20,7 +20,17 @@ const withoutMentions = (items) => items?.map(({ mention, ...item }) => item);
 export default {
   id: caveman.id,
   async setup(ctx) {
-    const dispose = await caveman.setup(ctx);
+    // server.js adds the ruleset on `context` only; its handler also takes `compaction`,
+    // whose event has the same shape, so the summary call gets caveman mode too.
+    const session = Object.create(ctx.session, {
+      hook: {
+        value: async (name, handler) => {
+          await ctx.session.hook(name, handler);
+          if (name === 'context') await ctx.session.hook('compaction', handler);
+        },
+      },
+    });
+    const dispose = await caveman.setup(Object.create(ctx, { session: { value: session } }));
     await ctx.command.transform((editor) => {
       editor.add({
         name: 'caveman',
