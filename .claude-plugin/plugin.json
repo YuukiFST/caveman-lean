@@ -1,0 +1,49 @@
+{
+  "name": "caveman-lean",
+  "version": "0.1.0",
+  "description": "Caveman's terse-output mode and nothing else: the three hooks that apply it on their own, plus the skill they read.",
+  "author": {
+    "name": "YuukiFST",
+    "url": "https://github.com/YuukiFST"
+  },
+  "license": "Apache-2.0",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/src/hooks/caveman-activate.js"],
+            "timeout": 30,
+            "statusMessage": "Loading caveman mode..."
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/src/hooks/caveman-activate.js", "--subagent"],
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/src/hooks/caveman-mode-tracker.js"],
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

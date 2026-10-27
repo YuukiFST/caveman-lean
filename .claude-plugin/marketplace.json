@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "caveman-lean",
+  "description": "Caveman's terse-output mode without the extra skills and agents.",
+  "owner": {
+    "name": "YuukiFST",
+    "url": "https://github.com/YuukiFST"
+  },
+  "plugins": [
+    {
+      "name": "caveman-lean",
+      "description": "Terse output in the main thread and every subagent; no cloud, workflow or cavecrew components.",
+      "source": "./",
+      "category": "productivity"
+    }
+  ]
+}
