@@ -30,7 +30,7 @@ Remove Caveman's own OpenCode plugin (`plugins/caveman` in the OpenCode config d
 |------|--------|--------|
 | `SessionStart` | `caveman-activate.js` | Injects `skills/caveman/SKILL.md` into the main thread |
 | `SubagentStart` | `caveman-activate.js --subagent` | Injects the same text into every subagent |
-| `UserPromptSubmit` | `caveman-mode-tracker.js` | Adds a one-line reminder each turn; `stop caveman` or `normal mode` turns it off |
+| `UserPromptSubmit` | `caveman-mode-tracker.js` | Adds a one-line reminder each turn; `stop caveman` or `normal mode` turns it off, `CAVEMAN_REINFORCE=0` or `"reinforce": false` in the Caveman config drops only the reminder |
 
 `caveman-config.js` and `caveman-parse.js` are their helpers.
 The statusline scripts are there because `caveman-activate.js` copies them to the config dir when a `statusLine` uses them.
@@ -54,7 +54,7 @@ It keeps its mode in `.caveman-active` in the OpenCode config dir, so a switch a
 
 ## Upstream
 
-Every file under `src/` and `skills/` is copied unchanged from Caveman at [`9b68f7e`](https://github.com/JuliusBrussee/caveman/tree/9b68f7ed12b05e7efaff18e65c5a3fc2849fd0a4).
+Every file under `src/` and `skills/` is copied unchanged from Caveman at [`4cfa054`](https://github.com/JuliusBrussee/caveman/tree/4cfa05465a92b7546f38b67815d83edaec81e9f2).
 To update, copy the same files from the new release, run the tests, and bump `version` in `.claude-plugin/plugin.json` and `package.json` so installed copies update.
 
 Licensed under Apache-2.0, like Caveman; see `LICENSE` and `NOTICE`.
