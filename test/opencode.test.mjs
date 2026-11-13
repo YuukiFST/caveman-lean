@@ -7,6 +7,7 @@ import path from 'node:path';
 // plugin.js resolves its flag file from XDG_CONFIG_HOME when the module loads.
 const configHome = fs.mkdtempSync(path.join(os.tmpdir(), 'caveman-lean-opencode-'));
 process.env.XDG_CONFIG_HOME = configHome;
+delete process.env.OPENCODE_CONFIG_DIR;
 delete process.env.CAVEMAN_DEFAULT_MODE;
 test.after(() => fs.rmSync(configHome, { recursive: true, force: true }));
 
